@@ -73,6 +73,6 @@ module.exports = function(grunt) {
   // Default task.
   grunt.registerTask('default', ['clean', 'jshint', 'nodeunit', 'couch']);
 
-  // Publish task.
-  grunt.registerTask('publish', ['couch', 'push']);
+  // Deploy task.
+  grunt.registerTask('deploy', ['couch', 'push']);
 };
