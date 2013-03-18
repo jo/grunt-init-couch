@@ -24,7 +24,7 @@ module.exports = function(grunt) {
             start: true,
           }
         },
-        src: ['couch/**/*.js']
+        src: ['couch/**/!(vendor)/*.js']
       },
       test: {
         src: ['test/**/*.js']
@@ -58,8 +58,20 @@ module.exports = function(grunt) {
         }
       }
     },
+    copy: {
+      testfiles: {
+        expand: true,
+        rename: function(dest, src) {
+          var parts = src.split('/');
+          parts.splice(2, 0, 'node_modules');
+          return dest + parts.join('/');
+        },
+        src: 'couch/*/lib/**/*.js',
+        dest: 'test/'
+      }
+    },
     clean: {
-      couch: 'tmp'
+      couch: ['tmp', 'test/couch/*/node_modules']
     }
   });
 
@@ -67,11 +79,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-couch');
 
   // Default task.
-  grunt.registerTask('default', ['clean', 'jshint', 'nodeunit', 'couch']);
+  grunt.registerTask('default', ['clean', 'jshint', 'copy:testfiles', 'nodeunit']);
 
   // Deploy task.
   grunt.registerTask('deploy', ['couch', 'push']);

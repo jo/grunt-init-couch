@@ -54,6 +54,7 @@ exports.template = function(grunt, init, done) {
       'grunt-contrib-jshint': '~0.3.0',
       'grunt-contrib-nodeunit': '~0.1.2',
       'grunt-contrib-watch': '~0.3.1',
+      'grunt-contrib-copy': '~0.4.0',
       'grunt-contrib-clean': '~0.4.0',
       'grunt-couch': '~0.4.4'
     };
