@@ -37,25 +37,29 @@ module.exports = function(grunt) {
       },
       couch: {
         files: '<%= jshint.couch.src %>',
-        tasks: ['jshint:couch', 'copy:testfiles', 'nodeunit']
+        tasks: ['jshint:couch', 'clean:couch', 'copy:couch', 'nodeunit']
       },
       test: {
         files: '<%= jshint.test.src %>',
-        tasks: ['jshint:test', 'copy:testfiles', 'nodeunit']
+        tasks: ['jshint:test', 'clean:couch', 'copy:couch', 'nodeunit']
       }
     },
     couch: {
-      files: {
-        'tmp/app.json': 'couch/*'
+      '{%= name %}': {
+        files: {
+          'tmp/app.json': 'couch/*'
+        }
       }
     },
     push: {
-      files: {
-        '{%= url %}/{%= db %}': 'tmp/app.json'
+      '{%= name %}': {
+        files: {
+          '{%= url %}/{%= db %}': 'tmp/app.json'
+        }
       }
     },
     copy: {
-      testfiles: {
+      couch: {
         expand: true,
         rename: function(dest, src) {
           var parts = src.split('/');
@@ -80,7 +84,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-couch');
 
   // Default task.
-  grunt.registerTask('default', ['clean', 'jshint', 'copy:testfiles', 'nodeunit']);
+  grunt.registerTask('default', ['clean:couch', 'jshint', 'copy:couch', 'nodeunit']);
 
   // Deploy task.
   grunt.registerTask('deploy', ['couch', 'push']);
