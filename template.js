@@ -12,16 +12,16 @@
 exports.description = 'Create a CouchDB project.';
 
 // Template-specific notes to be displayed before question prompts.
-exports.notes = '_Project name_ shouldn\'t contain spaces and should ' +
-  'should not start with a number.';
+exports.notes = '_Database name_ must only contain lowercase characters (a-z), ' +
+  'digits (0-9), and any of the characters _, $, (, ), +, -, and /. ' +
+  'And it must begin with a letter.';
 
 // Template-specific notes to be displayed after question prompts.
 exports.after = 'You should now install project dependencies with _npm ' +
-  'install_. After that, you may execute project tasks with _grunt_. For ' +
-  'more information about installing and configuring Grunt, please see ' +
-  'the Getting Started guide:' +
+  'install_. For more information about using grunt-couch, please see ' +
+  'the grunt-couch website:' +
   '\n\n' +
-  'http://gruntjs.com/getting-started';
+  'http://jo.github.com/grunt-couch';
 
 // Any existing file or directory matching this wildcard will cause a warning.
 exports.warnOn = '*';
@@ -31,23 +31,23 @@ exports.template = function(grunt, init, done) {
   init.process({}, [
     // Prompt for these values.
     init.prompt('name'),
-    init.prompt('title'),
-    init.prompt('description'),
     {
       name: 'url',
       message: 'URL to your CouchDB server',
+      validator: /^http[s]?:\/\//,
+      warning: 'Must be a http or https URL.',
       default: 'http://localhost:5984'
     },
     {
       name: 'db',
       message: 'Database name',
+      validator: /^[a-z][-a-z0-9_$\(\)+\/]+$/,
+      warning: 'Only lowercase characters (a-z), digits (0-9), and any of the characters _, $, (, ), +, -, and / are allowed. Must begin with a letter.',
       default: function(value, data, done) {
         var db = data.name || '';
         done(null, db);
       } 
-    },
-    init.prompt('licenses'),
-    init.prompt('author_name')
+    }
   ], function(err, props) {
     props.keywords = ['couchdb'];
     props.devDependencies = {
@@ -61,9 +61,6 @@ exports.template = function(grunt, init, done) {
 
     // Files to copy (and process).
     var files = init.filesToCopy(props);
-
-    // Add properly-named license files.
-    init.addLicenseFiles(files, props.licenses);
 
     // Actually copy (and process) files.
     init.copyAndProcess(files, props);

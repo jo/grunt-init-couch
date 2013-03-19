@@ -35,27 +35,23 @@ module.exports = function(grunt) {
         files: '<%= jshint.gruntfile.src %>',
         tasks: ['jshint:gruntfile']
       },
-      lib: {
-        files: '<%= jshint.lib.src %>',
-        tasks: ['jshint:lib', 'nodeunit']
+      couch: {
+        files: '<%= jshint.couch.src %>',
+        tasks: ['jshint:couch', 'copy:testfiles', 'nodeunit']
       },
       test: {
         files: '<%= jshint.test.src %>',
-        tasks: ['jshint:test', 'nodeunit']
+        tasks: ['jshint:test', 'copy:testfiles', 'nodeunit']
       }
     },
     couch: {
-      '{%= name %}': {
-        files: {
-          'tmp/{%= name %}.json': 'couch/*'
-        }
+      files: {
+        'tmp/app.json': 'couch/*'
       }
     },
     push: {
-      '{%= name %}': {
-        files: {
-          '{%= url %}/{%= db %}': 'tmp/{%= name %}.json'
-        }
+      files: {
+        '{%= url %}/{%= db %}': 'tmp/app.json'
       }
     },
     copy: {

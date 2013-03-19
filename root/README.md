@@ -1,13 +1,7 @@
-{%= name %}
-===========
-{%= description %}
+# {%= name %}
 
 ## Getting Started
 Install with `npm install`
-
-Publish with `grunt publish`
-
-Visit {%= url %}/{%= db %}/_design/{%= name %}/_rewrite
 
 ## Linting
 Lint your sources with `grunt jshint`
@@ -18,9 +12,9 @@ Run the tests with `grunt nodeunit`
 ## Watch
 Watch for changes and lint and run tests with `grunt watch`
 
-## Documentation
-_(Coming soon)_
+## Compile
+Compile your design documents with `grunt couch`
 
-## License
-Copyright (c) {%= grunt.template.today('yyyy') %} {%= author_name %}  
-Licensed under the {%= licenses.join(', ') %} license{%= licenses.length === 1 ? '' : 's' %}.
+## Push
+Push your design documents with `grunt push`
+
