@@ -24,7 +24,7 @@ module.exports = function(grunt) {
             start: true,
           }
         },
-        src: ['couch/**/!(vendor)/*.js']
+        src: ['couch/**/!(vendor|_attachments)/*.js']
       },
       test: {
         src: ['test/**/*.js']
