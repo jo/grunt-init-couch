@@ -56,7 +56,7 @@ exports.template = function(grunt, init, done) {
       'grunt-contrib-watch': '~0.3.1',
       'grunt-contrib-copy': '~0.4.0',
       'grunt-contrib-clean': '~0.4.0',
-      'grunt-couch': '~0.4.4'
+      'grunt-couch': '~0.5.2'
     };
 
     // Files to copy (and process).

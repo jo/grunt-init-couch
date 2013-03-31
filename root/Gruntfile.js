@@ -46,6 +46,9 @@ module.exports = function(grunt) {
     },
     couch: {
       '{%= name %}': {
+        options: {
+          merge: 'couch/shared'
+        },
         files: {
           'tmp/app.json': 'couch/*'
         }
