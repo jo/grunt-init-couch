@@ -44,7 +44,7 @@ module.exports = function(grunt) {
         tasks: ['jshint:test', 'clean:couch', 'copy:couch', 'nodeunit']
       }
     },
-    couch: {
+    'couch-compile': {
       '{%= name %}': {
         options: {
           merge: 'couch/shared'
@@ -54,10 +54,17 @@ module.exports = function(grunt) {
         }
       }
     },
-    push: {
+    'couch-push': {
       '{%= name %}': {
         files: {
           '{%= url %}/{%= db %}': 'tmp/app.json'
+        }
+      }
+    },
+    'couch-configure': {
+      '{%= name %}': {
+        files: {
+          '{%= url %}': 'config'
         }
       }
     },
@@ -88,7 +95,4 @@ module.exports = function(grunt) {
 
   // Default task.
   grunt.registerTask('default', ['clean:couch', 'jshint', 'copy:couch', 'nodeunit']);
-
-  // Deploy task.
-  grunt.registerTask('deploy', ['couch', 'push']);
 };
